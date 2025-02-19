@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\StudentsController;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
 
-// View
+// For View
 Route::get('/', [StudentsController::class, 'myWelcomeView'])->name('std.myWelcomeView');
 
 // Create

@@ -15,22 +15,22 @@ class StudentsController extends Controller
         return view('welcome', compact('students', 'users'));
     }
 
-    // public function createNewStd(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|max:3',
-    //         'age' => 'required|numeric',
-    //         'gender' => 'required|max:6',
-    //         'address' => 'required'
-    //     ]);
+    public function createNewStd(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:50',
+            'age' => 'required|numeric',
+            'gender' => 'required|max:6',
+            'address' => 'required'
+        ]);
 
-    //     $addNew = new Students();
-    //     $addNew->name = $request->name;
-    //     $addNew->age = $request->age;
-    //     $addNew->gender = $request->gender;
-    //     $addNew->address = $request->address;
-    //     $addNew->save();
+        $addNew = new Students();
+        $addNew->name = $request->name;
+        $addNew->age = $request->age;
+        $addNew->gender = $request->gender;
+        $addNew->address = $request->address;
+        $addNew->save();
 
-    //     return back()->with('success', 'Student added successfully!');
-    // }
+        return back()->with('success', 'Student added successfully!');
+    }
 }

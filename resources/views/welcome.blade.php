@@ -2,16 +2,16 @@
 @section('title', 'Welcome Page')
 
 <div>
-    <!-- @if('success')
+    @if('success')
     <div class="alert alert-success" role="alert">
         {{ session('success') }}
     </div>
-    @endif -->
+    @endif
     
     <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewModal">
-        Launch demo modal
-    </button> -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNewModal">
+        Add Student
+    </button>
 
     <table class="table">
         <thead>
@@ -37,11 +37,11 @@
     </table>
 
     <!-- Modal -->
-    <!-- <div class="modal fade" id="addNewModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="addNewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <div class="modal-header bg-success text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Fill in Form</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -79,7 +79,10 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save changes</button> -->
+                        <div>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>
