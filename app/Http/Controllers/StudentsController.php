@@ -33,4 +33,37 @@ class StudentsController extends Controller
 
         return back()->with('success', 'Student added successfully!');
     }
+
+    public function editStudent($id)
+    {
+        $student = Students::findOrFail($id);
+        return view('edit-student', compact('student'));
+    }
+
+    public function updateStudent(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:50',
+            'age' => 'required|numeric',
+            'gender' => 'required|max:6',
+            'address' => 'required'
+        ]);
+
+        $student = Students::findOrFail($id);
+        $student->name = $request->name;
+        $student->age = $request->age;
+        $student->gender = $request->gender;
+        $student->address = $request->address;
+        $student->save();
+
+        return back()->with('success', 'Student updated successfully!');
+    }
+
+    public function deleteStudent($id)
+    {
+        $student = Students::findOrFail($id);
+        $student->delete();
+
+        return back()->with('success', 'Student deleted successfully!');
+    }
 }

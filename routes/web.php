@@ -8,3 +8,9 @@ Route::get('/', [StudentsController::class, 'myWelcomeView'])->name('std.myWelco
 
 // Create
 Route::post('/create', [StudentsController::class, 'createNewStd'])->name('std.createNew');
+
+// Update
+Route::put('/update/{id}', [StudentsController::class, 'updateStudent'])->name('std.update');
+
+// Delete
+Route::delete('/delete/{id}', [StudentsController::class, 'deleteStudent'])->name('std.delete');

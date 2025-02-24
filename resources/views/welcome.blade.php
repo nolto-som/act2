@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', 'Welcome Page')
+@section('title', 'Activity 3: Add Update and Delete')
 
 <div>
     @if('success')
@@ -21,6 +21,7 @@
                 <th scope="col">Age</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Address</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +32,27 @@
                 <td>{{ $std -> age }}</td>
                 <td>{{ $std -> gender }}</td>
                 <td>{{ $std -> address }}</td>
+                <td>
+                <!-- Edit Button -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $std->id }}">
+                    Edit
+                </button>
+
+                <!-- Delete Form -->
+                <form action="{{ route('std.delete', $std->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 
-    <!-- Modal -->
+    <!-- Add Modal -->
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -88,4 +104,46 @@
             </div>
         </div>
     </div>
+
+   <!-- Edit Modal -->
+<div class="modal fade" id="editModal{{ $std->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title">Edit Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('std.update', $std->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ $std->name }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" value="{{ $std->age }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <input type="text" class="form-control" name="gender" value="{{ $std->gender }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" name="address" value="{{ $std->address }}" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
 </div>
