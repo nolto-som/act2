@@ -7,6 +7,13 @@
         {{ session('success') }}
     </div>
     @endif
+
+<div class="d-flex justify-content-end">
+    <a href="{{ route('auth.logout') }}" class="btn btn-danger px-4 py-2">
+        Logout
+    </a>
+</div>
+
     
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNewModal">

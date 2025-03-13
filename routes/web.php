@@ -1,16 +1,32 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\StudentsController;
-use Illuminate\Support\Facades\Route; 
+use App\Http\Middleware\AuthCheck;
+use Illuminate\Support\Facades\Route;
 
-// For View
-Route::get('/', [StudentsController::class, 'myWelcomeView'])->name('std.myWelcomeView');
+Route::get('/', function () {
+    return view('auth.login');
+});
 
-// Create
-Route::post('/create', [StudentsController::class, 'createNewStd'])->name('std.createNew');
+// Auth
+Route::get('/login', [AuthController::class, 'index'])->name(('auth.index'));
+Route::post('/user-login', [AuthController::class, 'login'])->name('auth.login');
 
-// Update
-Route::put('/update/{id}', [StudentsController::class, 'updateStudent'])->name('std.update');
+Route::middleware([AuthCheck::class])->group(function () {
+    
+    // For View
+    Route::get('/', [StudentsController::class, 'myWelcomeView'])->name('std.myWelcomeView');
 
-// Delete
-Route::delete('/delete/{id}', [StudentsController::class, 'deleteStudent'])->name('std.delete');
+    // Create
+    Route::post('/create', [StudentsController::class, 'createNewStd'])->name('std.createNew');
+
+    // Update
+    Route::put('/update/{id}', [StudentsController::class, 'updateStudent'])->name('std.update');
+
+    // Delete
+    Route::delete('/delete/{id}', [StudentsController::class, 'deleteStudent'])->name('std.delete');
+
+    // Logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+});
