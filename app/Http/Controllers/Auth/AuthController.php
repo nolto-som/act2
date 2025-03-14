@@ -35,13 +35,43 @@ class AuthController extends Controller
         }
     }
 
+    // Register
+    public function indexRegister()
+    {
+        if (Auth::check()) {
+            return redirect()->route('std.myWelcomeView');
+        }
+        return view('auth.register');
+    }
+
+
+    public function userRegister(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $input['name'] = $request->name;
+        $input['email'] = $request->email;
+        $input['password'] = bcrypt($request->password);
+        User::create($input);
+
+        return redirect()->route('auth.index')->with('success', 'Registration successful');
+    }
+
+    // Logout
     public function logout()
     {
-        if (Session::has('loginId')) {
-            Session::pull('loginId');
-            return redirect()->route('auth.index')->with('success', 'Logout successfully!');
-        } else {
+        if (!Auth::check()) {
             return redirect()->route('auth.index')->with('error', 'You are not logged in');
         }
+
+        Auth::logout();
+        Session::flush(); // Clears all session data
+
+        return redirect()->route('auth.index')->with('success', 'Logout successful!');
     }
+
 }

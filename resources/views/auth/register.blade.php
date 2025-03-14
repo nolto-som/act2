@@ -1,11 +1,11 @@
 @extends('base')
 
-@section('title', 'Login')
+@section('title', 'Register')
 
 @section('content')
-<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: #f8f9fa;">
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: #f8f9fa";>
     <div class="card shadow-lg p-4" style="width: 400px;">
-        <h3 class="text-center mb-4">Login</h3>
+        <h3 class="text-center mb-4">Register</h3>
 
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,11 +21,18 @@
         </div>
         @endif
 
-        <form method="POST" action="{{ route('auth.login') }}">
+        <form method="POST" action="{{ route('auth.userRegister') }}">
             @csrf
             <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Enter name">
+                @error('name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label class="form-label fw-bold">Email</label>
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your email">
                 @error('email')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -33,18 +40,18 @@
 
             <div class="mb-3">
                 <label class="form-label fw-bold">Password</label>
-                <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                 @error('password')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
-        
-        <div class="text-center mt-3">
-            <p> Don't have an account?  <a href="{{ route('auth.register') }}">Register</a></p>
-        </div>
+
+        <a href="{{ route('auth.index') }}" class="d-block text-center mt-3">Go back to login</a>
+
+
     </div>
 </div>
 @endsection

@@ -5,18 +5,22 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Middleware\AuthCheck;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+    // Redirect root URL to login page
+    Route::get('/', function () {
+        return redirect()->route('auth.index');
+    });
 
-// Auth
-Route::get('/login', [AuthController::class, 'index'])->name(('auth.index'));
-Route::post('/user-login', [AuthController::class, 'login'])->name('auth.login');
+    // Auth Login
+    Route::get('/login', [AuthController::class, 'index'])->name('auth.index');
+    Route::post('/user-login', [AuthController::class, 'login'])->name('auth.login');
 
-Route::middleware([AuthCheck::class])->group(function () {
-    
-    // For View
-    Route::get('/', [StudentsController::class, 'myWelcomeView'])->name('std.myWelcomeView');
+    // Auth Register
+    Route::get('/register', [AuthController::class, 'indexRegister'])->name('auth.register');
+    Route::post('/user-register', [AuthController::class, 'userRegister'])->name('auth.userRegister');
+
+    // Protected Routes (Require Authentication)
+    Route::middleware([AuthCheck::class])->group(function () {
+    Route::get('/students-list', [StudentsController::class, 'myWelcomeView'])->name('std.myWelcomeView');
 
     // Create
     Route::post('/create', [StudentsController::class, 'createNewStd'])->name('std.createNew');
